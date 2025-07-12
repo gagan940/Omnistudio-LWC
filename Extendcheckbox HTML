@@ -1,0 +1,64 @@
+<template>
+  <slot></slot>
+  <div class={_styleClasses.container}>
+    <vlocity_cmt-input type="checkbox"
+             label={_propSetMap.checkLabel}
+             theme={_theme}
+             onchange={handleChange}
+             icon-name="utility:info"
+             checked={elementValue}
+             tab-index={tabIndex}
+             field-level-help={_handleHelpText}
+             required-label={requiredLabel}
+             data-omni-input>
+      <template if:true={_propSetMap.repeat}>
+        <span slot="label"
+              class={_styleClasses.repeatContainer}
+              role="group">
+          <button if:true={canRepeat}
+                  class={_styleClasses.repeatAdd}
+                  onclick={handleAdd}>
+            <vlocity_cmt-icon icon-name="utility:add"
+                    alternative-text="Repeat Checkbox"
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </vlocity_cmt-icon>
+          </button>
+          <button if:true={canRemove}
+                  class={_styleClasses.repeatRemove}
+                  onclick={handleRemove}>
+            <vlocity_cmt-icon icon-name="utility:close"
+                    alternative-text="Remove Checkbox"
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </vlocity_cmt-icon>
+          </button>
+        </span>
+      </template>
+    </vlocity_cmt-input>
+  </div>
+  <template if:true={showSecondCheckbox}>
+    <div class={_styleClasses.container} style="margin-top: 1rem;">
+      <vlocity_cmt-input type="checkbox"
+               label="Second Checkbox"
+               theme={_theme}
+               onchange={handleChange}
+             icon-name="utility:info"
+             checked={elementValue}
+             tab-index={tabIndex}
+             field-level-help={_handleHelpText}
+             required-label={requiredLabel}
+               data-omni-input>
+      </vlocity_cmt-input>
+    </div>
+  </template>
+  <template if:true={showPopup}>
+    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+      <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); text-align: center;">
+        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Success" style="width: 64px; height: 64px; margin-bottom: 1rem;" />
+        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;">Checkbox Confirmed!</div>
+        <button onclick={handleClosePopup} style="padding: 0.5rem 1.5rem; background: #0070d2; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+      </div>
+    </div>
+  </template>
+</template>
