@@ -1,0 +1,45 @@
+import { LightningElement, api, track } from 'lwc';
+import omniscriptCheckbox from 'vlocity_cmt/omniscriptCheckbox';
+import { OmniscriptBaseMixin } from 'vlocity_cmt/omniscriptBaseMixin';
+import tmpl from './extendcheckbox.html';
+
+export default class Extendcheckbox extends OmniscriptBaseMixin(omniscriptCheckbox) {
+    @track showPopup = false;
+    @track showSecondCheckbox = false;
+
+
+    render(){
+        return tmpl;
+    }
+     get requiredLabel() {
+        return (window.allCustomLabelsUtil && window.allCustomLabelsUtil.OmniRequired) ? window.allCustomLabelsUtil.OmniRequired : 'Required';
+    }
+
+
+    connectedCallback() {
+        if (!window.allCustomLabelsUtil) {
+        window.allCustomLabelsUtil = { OmniRequired: 'Required' };
+    }
+        if (!this._propSetMap) {
+            this._propSetMap = {
+                checkLabel: ' Confirm',
+                repeat: false
+                // ...other properties as needed
+            };
+        }
+    }
+
+    handleChange(event) {
+        console.log('handleChange called');
+        const value = event.target.checked ? 'confirmed' : 'unconfirmed';
+        this.omniApplyCallResp({ checkboxValue: value });
+        // Show popup only when checked
+        this.showPopup = event.target.checked;
+        this.showSecondCheckbox = event.target.checked;
+        console.log('showPopup:', this.showPopup);
+    }
+
+    handleClosePopup() {
+        this.showPopup = false;
+    }
+}
